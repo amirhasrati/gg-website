@@ -5,17 +5,17 @@ type NavBarProps = {
     children: React.ReactNode;
 };
 */
-
+//add type, use for each
 const NavBar: React.FC = ({
 
 }) => {
     return (
         <div className="columns-3 gap-30">
             <header>
-                <a href={"http://localhost:5173/"}>Home </a>
+                <a href={"/"}>Home </a>
             </header>
             <header>
-                <a href={"http://localhost:5173/about"}> About</a>
+                <a href={"/about"}> About</a>
             </header>
 
             <p>Events</p>
