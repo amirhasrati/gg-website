@@ -7,7 +7,8 @@ import {
 } from "@react-router/dev/routes";
 
 export default [
-    index("routes/home.tsx"),
-    route("about", "routes/about.tsx"),
-	layout("./components/Layout.tsx"),
+	layout("./components/Layout.tsx", [
+		index("routes/home.tsx"),
+		route("about", "routes/about.tsx"),
+	]),
 ] satisfies RouteConfig;
