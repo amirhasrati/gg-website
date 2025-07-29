@@ -10,5 +10,6 @@ export default [
 	layout("./components/Layout.tsx", [
 		index("routes/home.tsx"),
 		route("about", "routes/about.tsx"),
+		route("events", "routes/events.tsx"),
 	]),
 ] satisfies RouteConfig;

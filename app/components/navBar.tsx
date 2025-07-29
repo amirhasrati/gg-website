@@ -7,7 +7,7 @@ const NavBar: React.FC = ({
     
 }) => {
     return (
-        <div className="columns-3 gap-30">
+        <div className="flex justify-center columns-3 gap-30">
             <NavBarLink 
                 label = "Home"
                 link = "/"/>
@@ -16,7 +16,7 @@ const NavBar: React.FC = ({
                 link = "/about"/>
             <NavBarLink 
                 label = "Events"
-                link = "/event"/>
+                link = "/events"/>
         </div>
     );
 }
