@@ -5,7 +5,7 @@ type NavBarProps = {
     children: React.ReactNode;
 };
 */
-//add type, use for each
+//add type, use for each loop with a list for links to be their own component
 const NavBar: React.FC = ({
 
 }) => {
