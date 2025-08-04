@@ -1,4 +1,5 @@
 import EventCard from "./EventCard";
+import PrimaryButton from "./PrimaryButton";
 
 const HomePage: React.FC = () => {
 	return (
@@ -12,6 +13,7 @@ const HomePage: React.FC = () => {
 				date="2025-08-12"
 				time="6:30 PM"
 			/>
+			<PrimaryButton text="primary button"/>
 		</div>
 	);
 };
