@@ -3,7 +3,7 @@ import EventCard from "./EventCard";
 const HomePage: React.FC = () => {
 	return (
 		<div className="flex flex-col items-center">
-			<h1 className="bungee my-32 text-center text-4xl sm:text-6xl md:text-7xl lg:text-8xl">
+			<h1 className="bungee my-32 text-center text-2xl sm:text-4xl md:text-5xl lg:text-6xl">
 				A COMMUNITY FOR EVERY PLAYER
 			</h1>
 			<EventCard
