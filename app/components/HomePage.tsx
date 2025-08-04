@@ -1,5 +1,6 @@
 import EventCard from "./EventCard";
 import PrimaryButton from "./PrimaryButton";
+import SecondaryButton from "./SecondaryButton";
 
 const HomePage: React.FC = () => {
 	return (
@@ -14,6 +15,7 @@ const HomePage: React.FC = () => {
 				time="6:30 PM"
 			/>
 			<PrimaryButton text="primary button"/>
+			<SecondaryButton text="secondary button"/>
 		</div>
 	);
 };

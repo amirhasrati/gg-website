@@ -8,7 +8,7 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({
     text,
 }) => {
     return (
-        <div className = "bg-orange-400 hover:brightness-80 font-medium rounded-4xl px-3 py-1">
+        <div className = "cursor-pointer bg-orange-400 hover:brightness-80 font-medium rounded-4xl m-2 px-3 py-1">
             {text}
         </div>
     )
