@@ -22,6 +22,14 @@ export function About() {
 					No matter your skill level or favorite genre, our goal is to build an
 					inclusive and energetic gaming community on campus.
 				</p>
+				<div className="grid grid-cols-2">
+					<img src="/images/FightNight.JPG" alt="wingstop fight night"></img>
+					<p>very epic and cool wingstop at fight night!</p>
+					<p>mario maddness very sugoi!</p>
+					<img src="/images/MarioMadness.JPG" alt="mario madness"></img>
+					<img src="/images/LAN2023.jpg" alt="LAN event"></img>
+					<p>epic amazing LAN event!</p>
+				</div>
 			</div>
 		</main>
 	);
