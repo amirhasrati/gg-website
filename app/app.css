@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Mozilla+Headline:wght@200..700&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -17,5 +18,9 @@ body {
 }
 
 .bungee {
-	font-family: "Bungee", "system-ui";
+	font-family: "Bungee", "Inter", system-ui;
+}
+
+.mzh {
+	font-family: "Mozilla Headline", "Inter", system-ui;
 }
