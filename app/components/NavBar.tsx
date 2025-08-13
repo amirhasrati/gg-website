@@ -13,7 +13,6 @@ const NavBar: React.FC = ({}) => {
 		<div className="mzh text-lg text-gray-50 tracking-wider font-medium flex gap-12 bg-orange-400 py-4 pl-10">
 			<NavBarLink label="HOME" link="/" />
 			<NavBarLink label="ABOUT" link="/about" />
-			<NavBarLink label="EVENTS" link="/events" />
 
 			{(isAdmin || isExec) && (
 				<NavBarLink label="MANAGE EVENTS" link="/admin/events" />
