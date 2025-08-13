@@ -193,9 +193,10 @@ export function ManageEventsPage() {
 		setEditingEvent(event);
 
 		// Format the date for the datetime-local input
-		const formattedDate = new Date(event.date)
-			.toISOString()
-			.slice(0, 16);
+		// Convert UTC date to local time for the input
+		const eventDate = new Date(event.date);
+		const localDate = new Date(eventDate.getTime() - (eventDate.getTimezoneOffset() * 60000));
+		const formattedDate = localDate.toISOString().slice(0, 16);
 
 		setFormData({
 			title: event.title,
@@ -243,13 +244,6 @@ export function ManageEventsPage() {
 						Manage Events
 					</h1>
 					<div className="flex gap-3">
-						<button
-							type="button"
-							onClick={fetchEvents}
-							className="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors border border-gray-300 dark:border-gray-600"
-						>
-							🔄 Refresh
-						</button>
 						<PrimaryButton text="+ Create New Event" onClick={handleNewEvent} />
 					</div>
 				</div>
@@ -266,96 +260,110 @@ export function ManageEventsPage() {
 					</div>
 				)}
 
-				{/* Event Form */}
+				{/* Event Form Modal */}
 				{showForm && (
-					<div className="mb-8 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-						<h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
-							{editingEvent ? "Edit Event" : "Create New Event"}
-						</h2>
-						<form
-							onSubmit={editingEvent ? handleUpdateEvent : handleCreateEvent}
-						>
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-								<div>
-									<label
-										htmlFor="title"
-										className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+					<div className="fixed inset-0 bg-gray-500/30 flex items-center justify-center z-50 p-4">
+						<div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+							<div className="p-6">
+								<div className="flex justify-between items-center mb-4">
+									<h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+										{editingEvent ? "Edit Event" : "Create New Event"}
+									</h2>
+									<button
+										onClick={resetForm}
+										className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
 									>
-										Event Title *
-									</label>
-									<input
-										type="text"
-										id="title"
-										name="title"
-										value={formData.title}
-										onChange={handleInputChange}
-										required
-										className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
-									/>
+										<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+										</svg>
+									</button>
 								</div>
-								<div>
-									<label
-										htmlFor="location"
-										className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-									>
-										Location
-									</label>
-									<input
-										type="text"
-										id="location"
-										name="location"
-										value={formData.location}
-										onChange={handleInputChange}
-										className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
-									/>
-								</div>
-								<div>
-									<label
-										htmlFor="date"
-										className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-									>
-										Date & Time *
-									</label>
-									<input
-										type="datetime-local"
-										id="date"
-										name="date"
-										value={formData.date}
-										onChange={handleInputChange}
-										required
-										className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-									/>
-								</div>
-							</div>
-							<div className="mb-4">
-								<label
-									htmlFor="description"
-									className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+								<form
+									onSubmit={editingEvent ? handleUpdateEvent : handleCreateEvent}
 								>
-									Description *
-								</label>
-								<textarea
-									id="description"
-									name="description"
-									value={formData.description}
-									onChange={handleInputChange}
-									required
-									rows={4}
-									className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
-								/>
+									<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+										<div>
+											<label
+												htmlFor="title"
+												className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+											>
+												Event Title *
+											</label>
+											<input
+												type="text"
+												id="title"
+												name="title"
+												value={formData.title}
+												onChange={handleInputChange}
+												required
+												className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+											/>
+										</div>
+										<div>
+											<label
+												htmlFor="location"
+												className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+											>
+												Location
+											</label>
+											<input
+												type="text"
+												id="location"
+												name="location"
+												value={formData.location}
+												onChange={handleInputChange}
+												className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+											/>
+										</div>
+										<div>
+											<label
+												htmlFor="date"
+												className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+											>
+												Date & Time *
+											</label>
+											<input
+												type="datetime-local"
+												id="date"
+												name="date"
+												value={formData.date}
+												onChange={handleInputChange}
+												required
+												className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+											/>
+										</div>
+									</div>
+									<div className="mb-4">
+										<label
+											htmlFor="description"
+											className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+										>
+											Description *
+										</label>
+										<textarea
+											id="description"
+											name="description"
+											value={formData.description}
+											onChange={handleInputChange}
+											required
+											rows={4}
+											className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+										/>
+									</div>
+									<div className="flex gap-3">
+										<PrimaryButton
+											type="submit"
+											text={editingEvent ? "Update Event" : "Create Event"}
+										/>
+										<SecondaryButton
+											type="button"
+											text="Cancel"
+											onClick={resetForm}
+										/>
+									</div>
+								</form>
 							</div>
-							<div className="flex gap-3">
-								<PrimaryButton
-									type="submit"
-									text={editingEvent ? "Update Event" : "Create Event"}
-								/>
-								<SecondaryButton
-									type="button"
-									text="Cancel"
-									onClick={resetForm}
-								/>
-							</div>
-						</form>
+						</div>
 					</div>
 				)}
 
