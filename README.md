@@ -22,66 +22,7 @@ Gryphon Gaming is a community for every player, offering exciting gaming events 
 - **Styling**: Tailwind CSS
 - **Backend**: Supabase (PostgreSQL + Auth)
 - **Build Tool**: Vite
-- **Deployment**: Docker-ready
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+ 
-- pnpm (recommended) or npm
-- Supabase account and project
-
-### Installation
-
-1. Clone the repository:
-```bash
-git clone <your-repo-url>
-cd gg-website
-```
-
-2. Install dependencies:
-```bash
-pnpm install
-# or
-npm install
-```
-
-3. Set up environment variables:
-Create a `.env` file in the root directory with your Supabase credentials:
-```env
-VITE_SUPABASE_URL=your_supabase_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-```
-
-### Development
-
-Start the development server:
-```bash
-pnpm dev
-# or
-npm run dev
-```
-
-Your application will be available at `http://localhost:5173` (or the next available port).
-
-### Building for Production
-
-Create a production build:
-```bash
-pnpm build
-# or
-npm run build
-```
-
-### Type Checking
-
-Run TypeScript type checking:
-```bash
-pnpm typecheck
-# or
-npm run typecheck
-```
+- **Deployment**: Vercel
 
 ## Project Structure
 
@@ -127,32 +68,12 @@ The application uses a Supabase PostgreSQL database with the following main tabl
 
 ## Deployment
 
-### Docker Deployment
+This project is deployed on Vercel for optimal performance and ease of management.
 
-Build and run using Docker:
-```bash
-docker build -t gryphon-gaming-website .
-docker run -p 3000:3000 gryphon-gaming-website
-```
+### Vercel Deployment
 
-### Manual Deployment
-
-1. Build the application: `pnpm build`
-2. Deploy the `build/` directory to your hosting platform
-3. Ensure environment variables are configured
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run tests and type checking
-5. Submit a pull request
-
-## License
-
-This project is proprietary to Gryphon Gaming.
-
----
-
-Built with ❤️ for the Gryphon Gaming community.
+The application automatically deploys from the main branch and includes:
+- **Automatic builds** on every push
+- **Preview deployments** for pull requests
+- **Global CDN** for fast loading worldwide
+- **Environment variable management** for Supabase credentials
