@@ -18,7 +18,7 @@ const AuthCallback: React.FC = () => {
 	useEffect(() => {
 		const handleAuthCallback = async () => {
 			try {
-				// For magic links, Supabase automatically handles the session
+				// For email sign-in links, Supabase automatically handles the session
 				// We just need to check if we have a valid session
 				const {
 					data: { session },

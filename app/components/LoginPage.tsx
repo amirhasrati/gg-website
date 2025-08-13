@@ -16,7 +16,7 @@ const LoginPage: React.FC = () => {
 
 		setIsLoading(true);
 		setStatus("loading");
-		setMessage("Sending magic link...");
+		setMessage("Sending sign-in link...");
 
 		try {
 			const { error } = await supabase.auth.signInWithOtp({
@@ -29,10 +29,10 @@ const LoginPage: React.FC = () => {
 			if (error) {
 				setStatus("error");
 				setMessage(error.message);
-				console.error("Error sending magic link:", error.message);
+				console.error("Error sending sign-in link:", error.message);
 			} else {
 				setStatus("success");
-				setMessage("Magic link sent! Check your email.");
+				setMessage("Sign-in link sent! Check your email.");
 			}
 		} catch (error) {
 			setStatus("error");
@@ -57,7 +57,7 @@ const LoginPage: React.FC = () => {
 						Welcome Back
 					</h2>
 					<p className="text-gray-600 text-sm">
-						Sign in to your account with a magic link
+						Sign in to your account with an email link
 					</p>
 				</div>
 
@@ -150,10 +150,10 @@ const LoginPage: React.FC = () => {
 								{isLoading ? (
 									<div className="flex items-center justify-center space-x-2">
 										<div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-										<span>Sending Magic Link...</span>
+										<span>Sending Sign-in Link...</span>
 									</div>
 								) : (
-									"Send Magic Link"
+									"Send Sign-in Link"
 								)}
 							</button>
 						</div>

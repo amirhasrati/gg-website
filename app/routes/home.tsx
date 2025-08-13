@@ -7,7 +7,7 @@ import type { Event as GameEvent } from "~/types/event";
 export function meta({}: Route.MetaArgs) {
 	return [
 		{ title: "Home - Gryphon Gaming" },
-		{ name: "description", content: "Welcome to React Router!" },
+		{ name: "description", content: "Gryphon Gaming - University of Guelph's gaming community. View upcoming events, tournaments, and join our inclusive gaming community." },
 	];
 }
 

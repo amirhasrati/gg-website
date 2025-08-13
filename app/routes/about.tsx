@@ -4,7 +4,7 @@ import { About } from "../components/AboutPage";
 export function meta({}: Route.MetaArgs) {
 	return [
 		{ title: "About - Gryphon Gaming" },
-		{ name: "description", content: "Welcome to React Router!" },
+		{ name: "description", content: "Gryphon Gaming at University of Guelph - welcoming gaming community for all skill levels. Tournaments, game nights, and campus gaming events." },
 	];
 }
 
