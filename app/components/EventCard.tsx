@@ -3,15 +3,15 @@ import type React from "react";
 type EventCardProps = {
 	title: string;
 	description: string;
-	date: string;
-	time: string;
+	date: string; // This is timestamptz from database
+	location?: string;
 };
 
 const EventCard: React.FC<EventCardProps> = ({
 	title,
 	description,
 	date,
-	time,
+	location,
 }) => {
 	return (
 		<div className="bg-white shadow-sm rounded-2xl p-6 border border-gray-200 max-w-sm">
@@ -21,11 +21,12 @@ const EventCard: React.FC<EventCardProps> = ({
 
 			<div className="flex items-center text-sm text-gray-500">
 				<span className="mr-4">
-					📅 <time>{date}</time>
+					📅 <time>{new Date(date).toLocaleDateString()}</time>
 				</span>
-				<span>
-					🕒 <time>{time}</time>
+				<span className="mr-4">
+					🕒 <time>{new Date(date).toLocaleTimeString()}</time>
 				</span>
+				{location && <span>📍 {location}</span>}
 			</div>
 		</div>
 	);
