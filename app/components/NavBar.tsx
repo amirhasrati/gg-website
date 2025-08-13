@@ -1,6 +1,6 @@
 import type React from "react";
 import NavBarLink from "./NavBarLink";
-import { useAuth } from "~/useAuth";
+import { useAuth } from "~/lib/useAuth";
 
 const NavBar: React.FC = ({}) => {
 	const { user, signOut, isAdmin, isExec } = useAuth();

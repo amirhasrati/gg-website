@@ -1,85 +1,11 @@
-import { useState, useEffect, useCallback } from "react";
-import { supabase } from "~/supabase";
 import EventCard from "./EventCard";
+import type { Event } from "~/types/event";
 
-type Event = {
-	id: string;
-	title: string;
-	description: string;
-	date: string;
-	location?: string;
-	created_at: string;
-	updated_at: string;
-	created_by: string;
-};
+interface EventsPageProps {
+	events: Event [];
+}
 
-export function Events() {
-	const [events, setEvents] = useState<Event[]>([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
-
-	const fetchEvents = useCallback(async () => {
-		try {
-			setLoading(true);
-			setError(null);
-
-			const { data, error } = await supabase
-				.from("events")
-				.select("*")
-				.order("date", { ascending: true });
-
-			if (error) {
-				console.error("Error fetching events:", error);
-				throw error;
-			}
-
-			setEvents(data || []);
-		} catch (error) {
-			console.error("Error fetching events:", error);
-			setError("Failed to fetch events");
-		} finally {
-			setLoading(false);
-		}
-	}, []);
-
-	useEffect(() => {
-		fetchEvents();
-	}, [fetchEvents]);
-
-	if (loading) {
-		return (
-			<main className="pt-16 pb-4 px-4 bg-gray-50 dark:bg-gray-900 min-h-screen">
-				<div className="max-w-6xl mx-auto">
-					<div className="text-center py-20">
-						<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-						<p className="mt-4 text-gray-600 dark:text-gray-400">
-							Loading events...
-						</p>
-					</div>
-				</div>
-			</main>
-		);
-	}
-
-	if (error) {
-		return (
-			<main className="pt-16 pb-4 px-4 bg-gray-50 dark:bg-gray-900 min-h-screen">
-				<div className="max-w-6xl mx-auto">
-					<div className="text-center py-20">
-						<div className="text-red-600 text-xl mb-4">⚠️</div>
-						<p className="text-red-600 text-lg mb-2">Failed to load events</p>
-						<p className="text-gray-600 dark:text-gray-400 mb-4">{error}</p>
-						<button
-							onClick={fetchEvents}
-							className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-						>
-							Try Again
-						</button>
-					</div>
-				</div>
-			</main>
-		);
-	}
+export function Events({ events }: EventsPageProps) {
 
 	return (
 		<main className="pt-16 pb-4 px-4 bg-gray-50 dark:bg-gray-900 min-h-screen">
@@ -120,3 +46,4 @@ export function Events() {
 		</main>
 	);
 }
+

@@ -1,8 +1,8 @@
 export function About() {
 	return (
-		<main className="flex items-center justify-center pt-16 pb-4">
+		<main className="flex items-center justify-center">
 			<div className="flex-1 flex flex-col text-lg gap-16 min-h-0">
-				<h1 className="bungee my-16 text-center text-2xl sm:text-4xl md:text-5xl lg:text-6xl">
+				<h1 className="bungee my-32 text-center text-2xl sm:text-4xl md:text-5xl lg:text-6xl">
 					All Players Welcome — No Skill Tree Required
 				</h1>
 

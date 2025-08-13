@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
-import { supabase } from "~/supabase";
+import { supabase } from "~/lib/supabase";
 
 // Required loader function for React Router 7
 export const loader = async () => {
