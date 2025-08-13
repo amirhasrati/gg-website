@@ -47,9 +47,6 @@ export function ManageEventsPage() {
 	const fetchEvents = useCallback(async () => {
 		try {
 			setLoadingEvents(true);
-			console.log("Fetching events...");
-			console.log("Current user:", user?.id);
-			console.log("Is admin:", isAdmin);
 
 			const { data, error } = await supabase
 				.from("events")
@@ -61,8 +58,6 @@ export function ManageEventsPage() {
 				throw error;
 			}
 
-			console.log("Fetched events:", data);
-			console.log("Events count:", data?.length || 0);
 			setEvents(data || []);
 		} catch (err) {
 			console.error("Error fetching events:", err);
@@ -111,31 +106,25 @@ export function ManageEventsPage() {
 				return;
 			}
 
-			// Format the date for database insertion
+			const localDate = new Date(formData.date);
+
 			const eventData = {
 				...formData,
+				date: localDate.toISOString(), // Store as EST time
 				created_by: user.id,
 			};
 
-			console.log("Inserting event data:", eventData);
+					const { data, error } = await supabase
+			.from("events")
+			.insert([eventData])
+			.select();
 
-			const { data, error } = await supabase
-				.from("events")
-				.insert([eventData])
-				.select();
+		if (error) {
+			console.error("Supabase insert error:", error);
+			throw error;
+		}
 
-			if (error) {
-				console.error("Supabase insert error:", error);
-				throw error;
-			}
-
-			console.log("Event created successfully:", data);
-			console.log("Insert response data:", data);
-			console.log("Insert response error:", error);
-
-			if (!data) {
-				console.warn("Insert succeeded but no data returned");
-			}
+			
 
 			setSuccess("Event created successfully!");
 			resetForm();
@@ -154,9 +143,16 @@ export function ManageEventsPage() {
 			setError(null);
 			setSuccess(null);
 
+			const localDate = new Date(formData.date);
+
+			const updateData = {
+				...formData,
+				date: localDate.toISOString(),
+			};
+
 			const { error } = await supabase
 				.from("events")
-				.update(formData)
+				.update(updateData)
 				.eq("id", editingEvent.id);
 
 			if (error) throw error;
@@ -195,10 +191,16 @@ export function ManageEventsPage() {
 
 	const handleEditEvent = (event: Event) => {
 		setEditingEvent(event);
+
+		// Format the date for the datetime-local input
+		const formattedDate = new Date(event.date)
+			.toISOString()
+			.slice(0, 16);
+
 		setFormData({
 			title: event.title,
 			description: event.description,
-			date: event.date,
+			date: formattedDate,
 			location: event.location || "",
 		});
 		setShowForm(true);
@@ -389,10 +391,16 @@ export function ManageEventsPage() {
 											</p>
 											<div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
 												<span>
-													📅 {new Date(event.date).toLocaleDateString()}
+													📅 {new Date(event.date).toLocaleDateString('en-US', { 
+															timeZone: 'America/New_York' 
+														})}
 												</span>
 												<span>
-													🕒 {new Date(event.date).toLocaleTimeString()}
+													🕒 {new Date(event.date).toLocaleTimeString('en-US', { 
+															hour: '2-digit', 
+															minute: '2-digit',
+															timeZone: 'America/New_York'
+														})} EST
 												</span>
 												{event.location && <span>📍 {event.location}</span>}
 											</div>

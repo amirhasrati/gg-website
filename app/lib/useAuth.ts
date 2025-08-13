@@ -22,7 +22,7 @@ export const useAuth = () => {
 				.single();
 
 			if (roleError) {
-				setError(`Failed to fetch user role: #{roleError.message}`);
+				setError(`Failed to fetch user role: ${roleError.message}`);
 				setUserRole(null);
 				return;
 			}
@@ -34,7 +34,7 @@ export const useAuth = () => {
 				setError("No role found for user.");
 			}
 		} catch (error) {
-			console.error("Unexpected error fetchign user role:", error);
+			console.error("Unexpected error fetching user role:", error);
 			setError("Unexpected error occurred while fetching user role.");
 			setUserRole(null);
 		} finally {
@@ -113,9 +113,9 @@ export const useAuth = () => {
 		setError(null);
 	}, []);
 
-	const isAdmin = userRole === "admin";
-	const isExec = userRole === "exec";
-	const isRegular = userRole === "regular";
+	const isAdmin = userRole?.toLowerCase() === "admin";
+	const isExec = userRole?.toLowerCase() === "exec";
+	const isRegular = userRole?.toLowerCase() === "regular";
 
 	return {
 		user,
