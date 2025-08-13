@@ -19,7 +19,7 @@ const NavBar: React.FC = ({}) => {
 				<NavBarLink label="MANAGE EVENTS" link="/admin/events" />
 			)}
 
-			{isAdmin && <NavBarLink label="ADMIN PANEL" link="/admin" />}
+			{/* {isAdmin && <NavBarLink label="ADMIN PANEL" link="/admin" />} */}
 
 			{user ? (
 				<div className="flex items-center gap-4">
