@@ -1,18 +1,11 @@
-import type React from "react";
-
 type EventCardProps = {
 	title: string;
 	description: string;
-	date: string; // This is timestamptz from database
+	date: string; // timestamptz
 	location?: string;
 };
 
-const EventCard: React.FC<EventCardProps> = ({
-	title,
-	description,
-	date,
-	location,
-}) => {
+const EventCard = ({ title, description, date, location }: EventCardProps) => {
 	return (
 		<div className="bg-white shadow-sm rounded-2xl p-6 border border-gray-200 max-w-sm">
 			<h2 className="text-xl font-semibold text-gray-900 mb-2">{title}</h2>
