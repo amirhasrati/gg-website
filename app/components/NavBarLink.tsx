@@ -1,18 +1,20 @@
-import type React from "react";
+import { NavLink } from "react-router";
 
 type NavBarLinkProps = {
     label: string;
 	link: string;
 };
 
-const NavBarLink: React.FC<NavBarLinkProps> = ({
-    label,
-    link,
-}) => {
+const NavBarLink = ({ label, link }: NavBarLinkProps) => {
     return (
-        <div>
-            <a href={link}>{label}</a> 
-        </div>
+        <NavLink 
+            to={link} 
+            className={({ isActive }) => 
+                isActive ? "nav-link active" : "nav-link"
+            }
+        >
+            {label}
+        </NavLink>
     );
 }
 
