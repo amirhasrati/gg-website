@@ -1,4 +1,6 @@
 import { createServerClient, parseCookieHeader, serializeCookieHeader } from "@supabase/ssr";
+import type { SupabaseClient } from "@supabase/supabase-js";
+
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -9,7 +11,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 
 //function that loaders and actions can use to access the server client
-export const getServerClient = (request: Request): { client: typeof supabase, headers: typeof responseHeaders } => {
+export const getServerClient = (request: Request): { client: SupabaseClient, headers: Headers } => {
 	const responseHeaders = new Headers();
 	const supabase = createServerClient(
 		supabaseUrl,
