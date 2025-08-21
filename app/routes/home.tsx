@@ -1,6 +1,5 @@
 import type { Route } from "./+types/home";
 import HomePage from "~/components/HomePage";
-import { supabase } from "~/lib/supabase";
 import { getServerClient } from "~/lib/sbServerClient";
 import { useLoaderData } from "react-router";
 import type { Event as GameEvent } from "~/types/event";
