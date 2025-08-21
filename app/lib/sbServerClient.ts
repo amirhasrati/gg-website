@@ -3,13 +3,14 @@ import { createServerClient, parseCookieHeader, serializeCookieHeader } from "@s
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
+//null checking the environment variables
 if (!supabaseUrl || !supabaseAnonKey) {
 	throw new Error("Missing Supabase environment variables.");
 }
 
-
-export const getServerClient = (request: Request) => {
-	const headers = new Headers();
+//function that loaders and actions can use to access the server client
+export const getServerClient = (request: Request): { client: typeof supabase, headers: typeof responseHeaders } => {
+	const responseHeaders = new Headers();
 	const supabase = createServerClient(
 		supabaseUrl,
 		supabaseAnonKey,
@@ -20,7 +21,7 @@ export const getServerClient = (request: Request) => {
 				},
 				setAll(cookiesToSet) {
 					cookiesToSet.forEach(({ name, value, options }) =>
-						headers.append(
+						responseHeaders.append(
 							"Set-Cookie",
 							serializeCookieHeader(name, value, options),
 						),
@@ -30,5 +31,5 @@ export const getServerClient = (request: Request) => {
 		},
 	);
 
-	return { client: supabase, headers: headers };
+	return { client: supabase, headers: responseHeaders };
 };
