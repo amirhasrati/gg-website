@@ -1,6 +1,6 @@
 import type { Route } from "./+types/home";
 import HomePage from "~/components/HomePage";
-import { supabase } from "~/lib/supabase";
+import { getServerClient } from "~/lib/sbServerClient";
 import { useLoaderData } from "react-router";
 import type { Event as GameEvent } from "~/types/event";
 
@@ -11,8 +11,9 @@ export function meta({}: Route.MetaArgs) {
 	];
 }
 
-export async function loader({}: Route.LoaderArgs) {
-	const { data, error } = await supabase
+export async function loader({ request }: Route.LoaderArgs) {
+	const sbServerClient = getServerClient(request);
+	const { data, error } = await sbServerClient.client
 		.from('events')
 		.select('*')
 		.order('date', { ascending: true });
