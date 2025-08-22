@@ -1,29 +1,21 @@
-import type { Route } from "./+types/home";
 import HomePage from "~/components/HomePage";
-import { getServerClient } from "~/lib/sbServerClient";
 import { useLoaderData } from "react-router";
-import type { Event as GameEvent } from "~/types/event";
+import { fetchAllEvents } from "~/lib/supabase/dataAccess";
 
-export function meta({}: Route.MetaArgs) {
+export function meta() {
 	return [
 		{ title: "Home - Gryphon Gaming" },
-		{ name: "description", content: "Gryphon Gaming - University of Guelph's gaming community. View upcoming events, tournaments, and join our inclusive gaming community." },
+		{
+			name: "description",
+			content:
+				"Gryphon Gaming - University of Guelph's gaming community. View upcoming events, tournaments, and join our inclusive gaming community.",
+		},
 	];
 }
 
-export async function loader({ request }: Route.LoaderArgs) {
-	const sbServerClient = getServerClient(request);
-	const { data, error } = await sbServerClient.client
-		.from('events')
-		.select('*')
-		.order('date', { ascending: true });
-
-	if (error) {
-		console.error('Error fetching events:', error);
-		throw error;
-	}
-	
-	return { events: (data ?? []) as GameEvent[] };
+export async function loader() {
+	const data = await fetchAllEvents();
+	return { events: data };
 }
 
 export default function Home() {
