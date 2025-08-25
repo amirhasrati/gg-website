@@ -70,14 +70,10 @@ const updateEvent = async ( evnt: Event): Promise<void> => {
 
 //given an Event this function will delete any Event from the database with a matching event id
 const deleteEvent = async ( evnt: Event): Promise<void> => {
-	const { error } = await supabase
+	const response = await supabase
 		.from("events")
 		.delete()
 		.eq("id", evnt.id);
-
-	if (error) {
-		throw error;
-	}
 };
 
 export { fetchAllEvents, fetchEvent, createEvent, updateEvent, deleteEvent };
