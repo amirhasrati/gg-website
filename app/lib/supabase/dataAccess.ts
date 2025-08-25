@@ -12,7 +12,7 @@ const fetchAllEvents = async (): Promise<Event[]> => {
 	return data ?? [];
 };
 
-//returns a single event with the event id as the paramter
+//returns a single event with the event id as the parameter
 const fetchEvent = async (id: string): Promise<Event> => {
 	const { data, error } = await supabase
 	.from("events")
