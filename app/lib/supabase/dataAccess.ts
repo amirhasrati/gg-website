@@ -2,6 +2,7 @@ import type { UUID } from "crypto";
 import { supabase } from "./sbServerClient";
 import type { Event } from "~/types/event";
 
+//returns an array of all the events
 const fetchAllEvents = async (): Promise<Event[]> => {
 	const { data, error } = await supabase.from("events").select();
 
@@ -12,7 +13,8 @@ const fetchAllEvents = async (): Promise<Event[]> => {
 	return data ?? [];
 };
 
-const fetchEvent = async (id: UUID): Promise<Event> => {
+//returns a single event with the event id as the paramter
+const fetchEvent = async (id: string): Promise<Event> => {
 	const { data, error } = await supabase
 	.from("events")
 	.select()
@@ -26,4 +28,24 @@ const fetchEvent = async (id: UUID): Promise<Event> => {
 	return data as Event;
 };
 
-export { fetchAllEvents, fetchEvent };
+//given an Event as a parameter the function insterts the Event into the database
+const createEvent = async ( evnt: Event): Promise<void> => {
+	const { error } = await supabase
+		.from("events")
+		.insert({ 
+			id: evnt.id, 
+			title: evnt.title, 
+			description: evnt.description,
+			date: evnt.date,
+			location: evnt.location,
+			created_at: evnt.created_at,
+			updated_at: evnt.updated_at,
+			created_by: evnt.created_by
+		});
+
+	if (error) {
+		throw error;
+	}
+};
+
+export { fetchAllEvents, fetchEvent, createEvent };
