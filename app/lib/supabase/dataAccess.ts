@@ -1,3 +1,4 @@
+import type { UUID } from "crypto";
 import { supabase } from "./sbServerClient";
 import type { Event } from "~/types/event";
 
@@ -11,4 +12,18 @@ const fetchAllEvents = async (): Promise<Event[]> => {
 	return data ?? [];
 };
 
-export { fetchAllEvents };
+const fetchEvent = async (id: UUID): Promise<Event> => {
+	const { data, error } = await supabase
+	.from("events")
+	.select()
+	.eq("id", id)
+	.single();
+
+	if (error) {
+		throw error;
+	}
+
+	return data as Event;
+};
+
+export { fetchAllEvents, fetchEvent };
