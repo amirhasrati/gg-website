@@ -1,4 +1,3 @@
-import type { UUID } from "crypto";
 import { supabase } from "./sbServerClient";
 import type { Event } from "~/types/event";
 
